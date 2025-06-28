@@ -1,4 +1,7 @@
-Enunciado:
+Importante: todo el TP se debe programar utilizando una herramienta de versionado sea GIT o el que guste. Se evaluará que todos los participantes hayan hecho commit en el código. Si un participante no tiene realizado al menos un commit se considera que el mismo no trabajó y la nota no valdrá. Se debe demostrar avance y aprendizaje por lo que se recomienda realizar commits en cada avance del código que se realice, de esa forma se puede ver el progreso, las equivocaciones y los aprendizajes. No es parte de la materia enseñar el uso de GIT.
+Para la entrega se adjuntará en esta actividad el archivo .hs junto con un archivo de test .hs y la url del repositorio privado
+
+Enunciado
 En un mundo futurista, los robots compiten entre sí en desafíos de habilidades tecnológicas. Para mantener el orden y gestionar estos enfrentamientos, es necesario crear un sistema que permita modelar a los robots, sus programas y sus combates utilizando principios del paradigma funcional.
 
 Modelado (1):
