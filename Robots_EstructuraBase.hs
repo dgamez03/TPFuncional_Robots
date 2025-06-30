@@ -67,7 +67,20 @@ diferenciaDePoder :: Robot -> Robot -> Int
 
 -- PUNTO 3 - CONSULTAS SOBRE ACADEMIAS
 
--- type Academia = [Robot]
+type Academia = [Robot]
+
+-- Consulta 1: ¿Existe algún robot llamado "Atlas" sin programas?
+existeAtlasSinProgramas :: Academia -> Bool
+existeAtlasSinProgramas = any (\robot -> nombre robot == "Atlas" && length (programas robot) == 0)
+
+-- Consulta 2: ¿Todos los robots viejos son obstinados?
+todosLosViejosSonObstinados :: Academia -> Bool
+todosLosViejosSonObstinados = all esObstinadoSiViejo
+  where
+    esObstinadoSiViejo robot
+      | nivelExperiencia robot > 16 = length (programas robot) > 3 * nivelExperiencia robot
+      | otherwise                   = True
+
 
 -- PUNTO 4 - FUNCIÓN GENERAL DE COMPARACIÓN
 
