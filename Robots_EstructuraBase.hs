@@ -21,9 +21,9 @@ data Robot = Robot {
 -- Mostrar información básica de un robot
 mostrarRobot :: Robot -> String
 mostrarRobot (Robot nombre _ energia programas) =
-  "Robot: " ++ show nombre ++ 
-  " / Energía: " ++ show energia ++ 
-  " / Cantidad de programas: " ++ show (length programas)
+  " Robot: " ++ show nombre ++ 
+  " Energia: " ++ show energia ++ 
+  " Cantidad de programas: " ++ show (length programas)
 
 -- PUNTO 1 - PROGRAMAS BÁSICOS
 
@@ -84,6 +84,7 @@ todosLosViejosSonObstinados = all esObstinadoSiViejo
 
 
 -- PUNTO 4 - FUNCIÓN GENERAL DE COMPARACIÓN
+--El proposito de valorMaximo es buscar el "mejor" elemento según el criterio definido por func.
 
 valorMaximo :: Ord b => (a -> b) -> [a] -> a
 valorMaximo func [valor] = valor
