@@ -42,13 +42,11 @@ olvidarProgramas :: Int -> Programa
 olvidarProgramas n robot = robot { programas = drop n (programas robot) }
 
 -- Si no tiene programas, lanza error
--- El autoataque no puede llamarse así mismo
 -- El robot se ataca a sí mismo con su primer programa
 
 autoAtaque :: Programa
 autoAtaque robot
     | null (programas robot) = error "El robot no tiene programas para autoatacarse."
-    | head (programas robot) == autoAtaque = error "autoAtaque no puede ejecutarse a sí mismo"
     | otherwise = (head (programas robot)) robot
 
 
@@ -102,6 +100,47 @@ valorMaximo func (x : siguiente : xs)
 
 -- PUNTO 6 - ROBOTS DE EJEMPLO Y PRUEBAS
 
--- robot1 = (...)
--- robotSinProgramas = (...)
--- Qué pasa si un robot no tiene programas?
+-- Robot con programas variados
+robot1 :: Robot
+robot1 = Robot {
+    nombre = "EVA 02",
+    nivelExperiencia = 5,
+    energia = 80,
+    programas = [recargaBateria 15, descargaElectrica]
+}
+
+-- Robot sin programas
+robotSinProgramas :: Robot
+robotSinProgramas = Robot {
+    nombre = "EVA 01",
+    nivelExperiencia = 3,
+    energia = 40,
+    programas = []
+}
+
+-- Otro robot para probar estrategias
+robot2 :: Robot
+robot2 = Robot {
+    nombre = "EVA 03",
+    nivelExperiencia = 8,
+    energia = 100,
+    programas = [descargaElectrica, olvidarProgramas 1]
+}
+
+-- Aplicar el primer programa de robot1 a robot2
+robot2Modificado :: Robot
+robot2Modificado = (head (programas robot1)) robot2
+
+-- Simular interacción de un robot con otro, aplicando todos sus programas
+simularInteraccion :: Robot -> Robot -> Robot
+simularInteraccion atacante objetivo = foldl (\r prog -> prog r) objetivo (programas atacante)
+
+-- Probar simulación
+ejemploCombate :: Robot
+ejemploCombate = simularInteraccion robot1 robot2
+
+-- Mostrar resultados para prueba manual (en GHCi)
+-- mostrarRobot robot1
+-- mostrarRobot robot2
+-- mostrarRobot ejemploCombate
+
