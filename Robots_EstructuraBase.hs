@@ -54,20 +54,35 @@ autoAtaque robot
 
 -- PUNTO 2 - FUNCIONES AUXILIARES SOBRE ROBOTS
 
--- Calcular el poder del robot 
+-- Calcula el poder del robot
 poder :: Robot -> Int
+poder (Robot _ experiencia energia programas) = energia + (experiencia * length programas)
 
---Calcula la fuerza de un robot sumando su energía más el producto de su nivel de experiencia por la cantidad de programas que tiene.
+-- Calcula cuánta energía se pierde o gana al aplicar un programa a un robot
+-- La ganancia se indica con un número negativo
+daño :: Robot -> Programa -> Int
+daño robot programa = energia robot - energia (programa robot)
 
-dano :: Robot -> Programa -> Int
-
---Calcula cuánta energía se pierde o gana al aplicar un programa a un robot. La ganancia se indica con un número negativo. La función retorna 0 si no hay cambio.
-
+-- Diferencia absoluta en poder entre dos robots
 diferenciaDePoder :: Robot -> Robot -> Int
+diferenciaDePoder robot1 robot2 = abs (poder robot1 - poder robot2)
 
 -- PUNTO 3 - CONSULTAS SOBRE ACADEMIAS
 
--- type Academia = [Robot]
+type Academia = [Robot]
+
+-- Consulta 1: ¿Existe algún robot llamado "Atlas" sin programas?
+existeAtlasSinProgramas :: Academia -> Bool
+existeAtlasSinProgramas = any (\robot -> nombre robot == "Atlas" && length (programas robot) == 0)
+
+-- Consulta 2: ¿Todos los robots viejos son obstinados?
+todosLosViejosSonObstinados :: Academia -> Bool
+todosLosViejosSonObstinados = all esObstinadoSiViejo
+  where
+    esObstinadoSiViejo robot
+      | nivelExperiencia robot > 16 = length (programas robot) > 3 * nivelExperiencia robot
+      | otherwise                   = True
+
 
 -- PUNTO 4 - FUNCIÓN GENERAL DE COMPARACIÓN
 
