@@ -71,7 +71,11 @@ diferenciaDePoder :: Robot -> Robot -> Int
 
 -- PUNTO 4 - FUNCIÓN GENERAL DE COMPARACIÓN
 
--- valorMaximo :: (...)
+valorMaximo :: Ord b => (a -> b) -> [a] -> a
+valorMaximo func [valor] = valor
+valorMaximo func (x : siguiente : xs)
+      | func x >= func siguiente = valorMaximo func (x : xs)
+      | otherwise = valorMaximo func (siguiente : xs)
 
 
 -- PUNTO 5 - ESTRATEGIAS DE COMBATE
