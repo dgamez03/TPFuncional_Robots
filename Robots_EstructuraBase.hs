@@ -42,6 +42,7 @@ olvidarProgramas :: Int -> Programa
 olvidarProgramas n robot = robot { programas = drop n (programas robot) }
 
 -- Si no tiene programas, lanza error
+-- El autoataque no puede llamarse así mismo
 -- El robot se ataca a sí mismo con su primer programa
 
 autoAtaque :: Programa
@@ -90,13 +91,27 @@ valorMaximo func (x : siguiente : xs)
       | func x >= func siguiente = valorMaximo func (x : xs)
       | otherwise = valorMaximo func (siguiente : xs)
 
-
 -- PUNTO 5 - ESTRATEGIAS DE COMBATE
 
 -- mejorProgramaContra :: Robot -> Robot -> Programa
--- mejorOponente :: Robot -> Academia -> Robot
--- noPuedeDerrotarle :: Robot -> Robot -> Bool
+-- Elige el programa del segundo robot que cause mayor reducción de energía al primero.
 
+mejorProgramaContra :: Robot -> Robot -> Programa
+mejorProgramaContra victima atacante =
+  foldl1 (\programa1 programa2 -> if daño victima programa1 > daño victima programa2 then programa1 else programa2) (programas atacante)
+
+-- mejorOponente :: Robot -> Academia -> Robot
+-- Encuentra el robot con la mayor diferencia de poder respecto al robot recibido.
+
+mejorOponente :: Robot -> Academia -> Robot
+mejorOponente robot academia = 
+  foldl1 (\robot1 robot2 -> if diferenciaDePoder robot robot1 > diferenciaDePoder robot robot2 then robot1 else robot2) academia
+
+-- noPuedeDerrotarle :: Robot -> Robot -> Bool
+-- Tras aplicar todos los programas que conoce al segundo robot, la energía del primero quede igual que antes
+noPuedeDerrotarle :: Robot -> Robot -> Bool
+noPuedeDerrotarle atacante _ =
+  energia atacante == energia (foldl (\robot programa -> programa robot) atacante (programas atacante))
 
 -- PUNTO 6 - ROBOTS DE EJEMPLO Y PRUEBAS
 
